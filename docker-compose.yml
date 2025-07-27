@@ -1,0 +1,53 @@
+services:
+  backend:
+    build: ./lugx_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - clickhouse
+    networks:
+      - lugx-network
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lugx_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./local_pg_data:/var/lib/postgresql/data
+    networks:
+      - lugx-network
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    restart: always
+    ports:
+      - "8123:8123" # HTTP interface
+      - "9000:9000" # Native TCP interface
+    environment:
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
+      - CLICKHOUSE_DB=lugx_clickhouse_db
+    volumes:
+      - ./clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse-logs:/var/log/clickhouse-server
+    networks:
+      - lugx-network
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+networks:
+  lugx-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  clickhouse-data:
+  clickhouse-logs:
