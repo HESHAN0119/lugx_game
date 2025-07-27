@@ -20,7 +20,7 @@ from clickhouse_driver.errors import NetworkError
 from datetime import datetime
 from fastapi import HTTPException, Request
 
-#test
+#test2
 logging.basicConfig(level=logging.INFO)
 logger=logging.getLogger(__name__)
 
