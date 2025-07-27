@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0
+asyncpg
+psycopg2-binary
+pydantic==2.9.2
+passlib[bcrypt]
+python-jose==3.3.0
+clickhouse-driver==0.2.9
