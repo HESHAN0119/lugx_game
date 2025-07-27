@@ -1,0 +1,3 @@
+local_pg_data/
+clickhouse-logs/
+clickhouse-data/
