@@ -12,6 +12,7 @@ class Game(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     price = Column(Float)
+    release_date = Column(String, index=True)
     orders = relationship("Order", back_populates="game")
 
 class User(Base):
@@ -48,6 +49,7 @@ class GameRead(BaseModel):
     id: int
     name: str
     price: float
+    release_date: str
 
     class Config:
         orm_mode = True  # To convert from SQLAlchemy models
@@ -56,6 +58,7 @@ class GameRead(BaseModel):
 class GameUpdate(BaseModel):
     name: Optional[str] = None
     price: Optional[float] = None
+    release_date: Optional[str] = None
 
 
 

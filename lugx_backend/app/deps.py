@@ -15,6 +15,7 @@ class UserCreate(BaseModel):
 class GameCreate(BaseModel):
     name: str
     price: float
+    release_date: str
 
 # class UserCreate(BaseModel):
 #     user_name: str
