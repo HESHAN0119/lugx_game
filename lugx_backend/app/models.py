@@ -68,6 +68,7 @@ class GameUpdate(BaseModel):
 
 # router = APIRouter()
 
+
 # @router.post("/")
 # async def create_game(game: GameCreate, db: AsyncSession = Depends(get_db)):
 #     return await crud_game.create_game(db, game)
