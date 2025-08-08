@@ -59,14 +59,16 @@ async def read_games(db: AsyncSession = Depends(get_db)):
 
 @app.post("/api/games")
 async def create_game(game: GameCreate, db: AsyncSession = Depends(get_db)):
-    new_game = Game(name=game.name, price=game.price, updated_time = datetime.now())
+    new_game = Game(name=game.name, price=game.price, release_date=game.release_date)
+
     db.add(new_game)
     await db.commit()
     await db.refresh(new_game)
     return {
         "id": new_game.id,
         "name": new_game.name,
-        "price": new_game.price
+        "price": new_game.price,
+        "release_date": new_game.release_date
     }
 
 @app.post("/api/users")
@@ -83,8 +85,7 @@ async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
     new_user = User(
         username=user.username,
         email=user.email,
-        password=hashed_pw
-        updated_time = datetime.now()
+        password=hashed_pw,
     )
     db.add(new_user)
     await db.commit()
@@ -116,6 +117,9 @@ async def update_game(
 
     if game_update.price is not None:
         game.price = game_update.price
+
+    if game_update.release_date is not None:
+        game.release_date = game_update.release_date
 
     db.add(game)
     await db.commit()
@@ -169,7 +173,6 @@ async def place_order(
         game_id=game.id,
         quantity=order_data.quantity,
         total_price=total_price,
-        updated_time = datetime.now()
     )
 
     db.add(new_order)
