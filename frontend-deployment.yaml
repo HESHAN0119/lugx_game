@@ -4,7 +4,7 @@ metadata:
   name: lugx-frontend
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: lugx-frontend
@@ -14,20 +14,20 @@ spec:
         app: lugx-frontend
     spec:
       containers:
-      - name: lugx-frontend
-        image: lugxacr.azurecr.io/lugx_frontend:latest
-        ports:
-        - containerPort: 80
-        env:
-        - name: BACKEND_URL
-          value: "http://52.190.8.54:8000" 
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        - name: lugx-frontend
+          image: lugxacr.azurecr.io/lugx_frontend:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: BACKEND_URL
+              value: "http://52.190.8.54:8000"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +38,7 @@ spec:
   selector:
     app: lugx-frontend
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
   type: LoadBalancer
